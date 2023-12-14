@@ -7,4 +7,4 @@ Discord荒らしツールのフロントエンドです。 Sponsor: 荒らし共
   - RSC
 - ShadcnUI
   - TailwindCSS
-  - useLocalHooks
+  - useHooks

@@ -25,9 +25,9 @@ pnpm dev
 ```
 
 ## Stacks
-- Next.js
+- [Next.js](https://next.js.org)
   - AppRouter
   - RSC
-- ShadcnUI
-  - TailwindCSS
-  - useHooks
+- [ShadcnUI](https://ui.shadcn.com/)
+  - [TailwindCSS](https://tailwind.com)
+  - [useHooks](https://usehooks.co)

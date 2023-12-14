@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write ./**.{ts,js,tsx,jsx}",
-    "push": "git add * && git commit -m 'add' && git push -u origin main"
+    "push": "git add * && git commit -m 'add' && git push -u origin main",
+    "add-ui": "pnpx shadcn-ui add "
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.295.0",

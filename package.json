@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ./**.{ts,js,tsx,jsx}"
+    "format": "prettier --write ./**.{ts,js,tsx,jsx}",
+    "push": "git add * && git commit -m 'add' && git push -u origin main"
   },
   "dependencies": {
     "react": "^18",

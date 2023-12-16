@@ -27,7 +27,7 @@ export type OptionType = {
 interface MultiSelectProps {
     options: OptionType[];
     selected: string[];
-    onChange: React.Dispatch<React.SetStateAction<string[]>>;
+    onChange: React.Dispatch<React.SetStateAction<string>>;
     className?: string;
 }
 
@@ -36,7 +36,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
     const [open, setOpen] = React.useState(false)
 
     const handleUnselect = (item: string) => {
-        onChange(selected.filter((i) => i !== item))
+        onChange(selected.filter((i) => i == item)[0])
     }
 
     return (
@@ -50,7 +50,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                     onClick={() => setOpen(!open)}
                 >
                     <div className="flex gap-1 flex-wrap">
-                        {selected.map((item) => (
+                        {selected.slice(0, 3).map((item) => (
                             <Badge
                                 variant="secondary"
                                 key={item}
@@ -89,6 +89,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                                 key={option.value}
                                 onSelect={() => {
                                     onChange(
+                                        // @ts-ignore NOTE: LIB SIDE ERROR
                                         selected.includes(option.value)
                                             ? selected.filter((item) => item !== option.value)
                                             : [...selected, option.value]

@@ -61,7 +61,13 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 					};
 				})}
 				selected={props.data.map(i => i.token)}
-				onChange={() => {}}
+                // @ts-ignore NOTE: LIB SIDE ERROR
+				onChange={(e: string) => {
+                    // @ts-ignore NOTE: LIB SIDE ERROR
+                    const result = props.data.filter(d => d.token !== e)
+                    props.setData(result)
+                    LS.set("tokens", result)
+                }}
 			/>
 			<div className="w-full flex justify-around items-center">
 				<Input

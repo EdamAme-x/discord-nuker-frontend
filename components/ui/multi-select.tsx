@@ -57,7 +57,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                                 className="mr-1 mb-1"
                                 onClick={() => handleUnselect(item)}
                             >
-                                {item}
+                                {item.length > 8 ? item.substring(0, 7) + "..." : item}
                                 <button
                                     className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                                     onKeyDown={(e) => {
@@ -103,7 +103,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                                             "opacity-100" : "opacity-0"
                                     )}
                                 />
-                                {option.label}
+                                {option.label.length > 8 ? option.label.substring(0, 7) + "..." : option.label}
                             </CommandItem>
                         ))}
                     </CommandGroup>

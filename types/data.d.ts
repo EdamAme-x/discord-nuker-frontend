@@ -1,7 +1,7 @@
 declare module "*.json";
 export type Token = {
     token: string,
-    isEnbled: boolean
+    isEnabled: boolean
 }
 
 export type Tokens = Token[]

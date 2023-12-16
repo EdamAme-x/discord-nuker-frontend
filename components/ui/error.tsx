@@ -12,7 +12,7 @@ export function AlertDestructive(props: {
   return (
     <Alert variant="destructive">
       <AlertCircle className="h-4 w-4" />
-      <AlertTitle>Error</AlertTitle>
+      <AlertTitle>ERROR</AlertTitle>
       <AlertDescription>
         {props.text}
       </AlertDescription>

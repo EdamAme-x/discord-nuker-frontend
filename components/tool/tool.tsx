@@ -10,11 +10,11 @@ import { AlertDestructive } from "../ui/error";
 export function Tool() {
     const [data, setData] = useState<Tokens>(() => {
         if (typeof window !== "undefined") {
-            if (LS.get("tokens")) {
-                return JSON.parse(LS.get("tokens") as string)
-            }else {
+            if (!LS.get("tokens")) {
                 LS.set("tokens", [])
                 return []
+            }else {
+                return JSON.parse(LS.get("tokens") as string)
             }
         }else {
             return [];

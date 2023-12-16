@@ -8,6 +8,34 @@ PR前には `pnpm lint`, `pnpm format` を実行してください。
 どうしても改善出来ないエラーが有れば、PRの文章の最初に
 `!!! DONT MERGE THIS !!!` を付けてエラーの内容を貼ってください。確認します。
 
+#### Branch
+`feat/{feat_name}`
+`hotfix/{fix_name}`
+`tmp/{tmp_name}`
+
+#### Component
+パスカルケースが基本です。
+*e.g.*
+```tsx
+export function CallbackButton(props) {
+    return <button>PUSH</button>
+}
+```
+
+### Variables
+キャメルケースが基本ですが、関数、クラス等はパスカルケース推奨です。
+*e.g.*
+```tsx
+const isExist = false
+function CheckExist() {
+    ...
+}
+
+class ExistManager {
+    ...
+}
+```
+
 ### Setup
 
 ```shell

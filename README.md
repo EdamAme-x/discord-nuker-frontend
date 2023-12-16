@@ -1,6 +1,13 @@
 # discord-nuker-frontend
 Discord荒らしツールのフロントエンドです。 Sponsor: 荒らし共栄圏
 
+### Rules
+
+#### PullRequest
+PR前には `pnpm lint`, `pnpm format` を実行してください。
+どうしても改善出来ないエラーが有れば、PRの文章の最初に
+`!!! DONT MERGE THIS !!!` を付けてエラーの内容を貼ってください。確認します。
+
 ### Setup
 
 ```shell

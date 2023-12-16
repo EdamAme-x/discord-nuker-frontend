@@ -2,20 +2,17 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/themeProvider";
+import { SEO_DEFAULT } from "@/components/layout/seo";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-	title: "Discord Nuker",
-	description: "Discord 荒らしツール / Created by @amex2189 / Sponser: 荒らし共栄圏"
-};
+export const metadata: Metadata = SEO_DEFAULT;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="ja">
-			<head>
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="/favicon.ico" />
+			<head prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
+				<link rel="icon apple-touch-icon shortcut" href="/icon.gif" />
 			</head>
 			<body className={inter.className}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>

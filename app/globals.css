@@ -1,7 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+body {
+  scroll-behavior: smooth;
+  scrollbar-width: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

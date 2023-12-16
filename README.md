@@ -36,6 +36,10 @@ class ExistManager {
 }
 ```
 
+#### FileName
+キャメルケースが基本です。
+`layout.tsx`, `callbackButton.tsx`, etc...
+
 ### Setup
 
 ```shell

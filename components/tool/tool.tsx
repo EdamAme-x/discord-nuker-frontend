@@ -5,6 +5,7 @@ import { LS } from "@/lib/ls"
 import { Button } from "../ui/button";
 import { TokenPanel } from "./tokenPanel";
 import { Label } from "../ui/label"
+import { AlertDestructive } from "../ui/error";
 
 export function Tool() {
     const [data, setData] = useState<Tokens>(() => {
@@ -25,7 +26,7 @@ export function Tool() {
             <TokenPanel data={data} setData={setData} />
             {
                 data.length <= 0 && <div className="h-[50vh] flex flex-col justify-center items-center">
-                    <Label>TOKEN が追加されていません！</Label>
+                    <AlertDestructive text={"TOKEN が追加されていません！"} />
                 </div>
             }
         </div>

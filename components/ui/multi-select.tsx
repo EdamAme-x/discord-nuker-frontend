@@ -89,7 +89,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                                 key={option.value}
                                 onSelect={() => {
                                     onChange(
-                                        // @ts-ignore NOTE: LIB SIDE ERROR
+                                    // @ts-ignore NOTE: LIB SIDE ERROR
                                         selected.includes(option.value)
                                             ? selected.filter((item) => item !== option.value)
                                             : [...selected, option.value]

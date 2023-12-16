@@ -46,7 +46,7 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 	};
 
 	return (
-		<div className="max-w-[370px] flex flex-col justify-center items-center">
+		<div className="w-[350px] flex flex-col justify-center items-center">
 			<Label className="text-xl font-bold w-full px-[5px] inline-flex justify-center items-center my-3">
 				TokenPanel{" "}
 				<Setting data={props.data} setData={props.setData}>
@@ -68,6 +68,7 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
                     props.setData(result)
                     LS.set("tokens", result)
                 }}
+                className="w-[350px]"
 			/>
 			<div className="w-full flex justify-around items-center">
 				<Input
@@ -82,6 +83,7 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 							setTokenCheck(true);
 						}
 
+                        console.log(valid);
 						setToken((event.target as HTMLInputElement).value);
 					}}
 					value={token}

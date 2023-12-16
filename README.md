@@ -70,3 +70,8 @@ pnpm dev
 - [ShadcnUI](https://ui.shadcn.com/)
   - [TailwindCSS](https://tailwind.com)
   - [useHooks](https://usehooks.co)
+
+## LICENSE
+
+商用利用や無断使用を禁じます。
+発覚時には全ての権利を主張できるものとします。

@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { Tokens } from "@/types/data"
 import { LS } from "@/lib/ls"
+import { Button } from "../ui/button";
 
 export function Tool() {
     const [data, setData] = useState<Tokens>(() => {
@@ -19,7 +20,7 @@ export function Tool() {
 
     return (
         <div>
-            
+            <Button>Button</Button>
         </div>
     )
 }

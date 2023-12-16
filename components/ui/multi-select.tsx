@@ -50,12 +50,11 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                     onClick={() => setOpen(!open)}
                 >
                     <div className="flex gap-1 flex-wrap">
-                        {selected.slice(0, 3).map((item) => (
+                        {selected.slice(0, 4).map((item) => (
                             <Badge
                                 variant="secondary"
                                 key={item}
                                 className="mr-1 mb-1"
-                                onClick={() => handleUnselect(item)}
                             >
                                 {item.length > 8 ? item.substring(0, 7) + "..." : item}
                                 <button
@@ -69,12 +68,18 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }}
-                                    onClick={() => handleUnselect(item)}
+                                    onClick={(event: any) => {
+                                        handleUnselect(item)
+                                        event.stopPropagation();
+                                    }}
                                 >
                                     <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                                 </button>
                             </Badge>
                         ))}
+                        {
+                            selected.length > 4 && <Badge variant="secondary" className="mr-1 mb-1">...</Badge>
+                        }
                     </div>
                     <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                 </Button>

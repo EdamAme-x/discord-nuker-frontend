@@ -61,14 +61,14 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 					};
 				})}
 				selected={props.data.map(i => i.token)}
-                // @ts-ignore NOTE: LIB SIDE ERROR
+				// @ts-ignore NOTE: LIB SIDE ERROR
 				onChange={(e: string) => {
-                    // @ts-ignore NOTE: LIB SIDE ERROR
-                    const result = props.data.filter(d => d.token !== e)
-                    props.setData(result)
-                    LS.set("tokens", result)
-                }}
-                className="w-[350px]"
+					// @ts-ignore NOTE: LIB SIDE ERROR
+					const result = props.data.filter(d => d.token !== e);
+					props.setData(result);
+					LS.set("tokens", result);
+				}}
+				className="w-[340px]"
 			/>
 			<div className="w-full flex justify-around items-center">
 				<Input
@@ -83,7 +83,7 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 							setTokenCheck(true);
 						}
 
-                        console.log(valid);
+						console.log(valid);
 						setToken((event.target as HTMLInputElement).value);
 					}}
 					value={token}
@@ -110,6 +110,8 @@ import {
 	DialogTrigger
 } from "@/components/ui/dialog";
 import { MdDelete } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
+import { isWorks } from "@/lib/isWorks";
 
 export function Setting(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void }) {
 	return (
@@ -138,6 +140,35 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						}}>
 						<MdDelete className="transform scale-150 mr-2" /> Clear All Token
 					</Button>
+					<DialogTemplate
+						className="inline-flex justify-center items-center"
+                        button={<><FaCheckCircle className="transform scale-[1.2] mr-3" /> 生存確認</>}
+                        title={"生存確認"}
+                    >
+						<Label className="text-center">Tokenの生存確認を行えます。</Label>
+					</DialogTemplate>
+				</div>
+			</DialogContent>
+		</Dialog>
+	);
+}
+export function DialogTemplate(props: {
+    title: string,
+    button: React.ReactNode
+    className: string,
+    children: React.ReactNode
+}) {
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button variant="outline" className={props.className}>{props.button}</Button>
+			</DialogTrigger>
+			<DialogContent className="sm:max-w-[425px]">
+				<DialogHeader>
+					<DialogTitle>{props.title}</DialogTitle>
+				</DialogHeader>
+				<div className="grid gap-4 py-4">
+					{props.children}
 				</div>
 			</DialogContent>
 		</Dialog>

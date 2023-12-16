@@ -8,6 +8,7 @@ import { isToken } from "@/lib/isToken";
 
 export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => void }) {
 	const [token, setToken] = useState<string>("");
+	const [tokenCheck, setTokenCheck] = useState<boolean>(false);
 
 	return (
 		<div className="max-w-[370px]">
@@ -28,13 +29,21 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 					placeholder="Token"
                     // @ts-ignore NOTE: LIB SIDE ERROR
 					onChange={(event: InputEvent) => {
-						isToken((event.target as HTMLInputElement).value);
+						const valid = isToken((event.target as HTMLInputElement).value);
+                        console.log(valid)
+                        if (!valid) {
+                            setTokenCheck(false)
+                        }else {
+                            setTokenCheck(true)
+                        }
+
+                        setToken((event.target as HTMLInputElement).value);
 					}}
 					value={token}
 					className="w-2/3 my-2"
 				/>
-                <Button>
-                    追加
+                <Button disabled={!tokenCheck}>
+                    Add
                 </Button>
 			</div>
 		</div>

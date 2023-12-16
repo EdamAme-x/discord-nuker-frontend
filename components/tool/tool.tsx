@@ -26,7 +26,7 @@ export function Tool() {
             <TokenPanel data={data} setData={setData} />
             {
                 data.length <= 0 && <div className="h-[50vh] flex flex-col justify-center items-center">
-                    <AlertDestructive text={"TOKEN が追加されていません！"} />
+                    <AlertDestructive text={"TOKEN が追加されていません。"} />
                 </div>
             }
         </div>

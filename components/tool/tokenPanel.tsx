@@ -188,7 +188,7 @@ function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (da
 				}}
 			>確認</Button>
 			{
-				result !== "" && <Label className="text-center">{result === "生存" ? "Tokenは使用可能です。" : "Tokenは使用不可である可能性が高いです。"}</Label>
+				result !== "" && <Label className="text-center">{result === "生存" ? <p>Tokenは使用可能です。</p> : <><p>Tokenは使用不可である可能性が高いです。</p><p>不自然な動作で一時的に制限されている可能性もあります。</p></>}</Label>
 			}
 		</DialogTemplate>
 	);

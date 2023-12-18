@@ -12,7 +12,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 
 export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => void }) {
 	const [token, setToken] = useState<string>("");
-	const [tokenCheck, setTokenCheck] = useState<boolean>(false);
+	const [tokenCheck, setTokenCheck] = useState<boolean>(false); // 厳格な管理の為に敢えてuseState
 
 	const addToken = () => {
 		if (props.data.find(i => i.token === token)) {
@@ -69,6 +69,7 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 					LS.set("tokens", result);
 				}}
 				className="w-[340px]"
+				suppressHydrationWarning={true}
 			/>
 			<div className="w-full flex justify-around items-center">
 				<Input
@@ -142,34 +143,75 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 					</Button>
 					<DialogTemplate
 						className="inline-flex justify-center items-center"
-                        button={<><FaCheckCircle className="transform scale-[1.2] mr-3" /> 生存確認</>}
-                        title={"生存確認"}
-                    >
+						button={
+							<>
+								<FaCheckCircle className="transform scale-[1.2] mr-3" /> 生存確認
+							</>
+						}
+						title={"生存確認"}>
 						<Label className="text-center">Tokenの生存確認を行えます。</Label>
+						<OneToken {...props} />
 					</DialogTemplate>
 				</div>
 			</DialogContent>
 		</Dialog>
 	);
 }
+
+function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void }) {
+	const [oneToken, setOneToken] = useState<string>("");
+	let [result, setResult] = useState<"" | "生存" | "死亡">("");
+
+	return (
+		<DialogTemplate
+			className="inline-flex justify-center items-center"
+			button={
+				<>
+					<FaCheckCircle className="transform scale-[1.2] mr-3" /> 単体のTokenを生存確認
+				</>
+			}
+			title={"単体生存確認"}>
+			<Input placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXX" value={oneToken} onChange={(e) => setOneToken(e.target.value)} />
+			<Button
+				onClick={async () => {
+					const valid = isToken(oneToken);
+
+					if (valid) {
+						if (await isWorks(oneToken)) {
+							setResult("生存");
+						} else {
+							setResult("死亡");
+						}
+					}else {
+						toast.error("Tokenの形式が正しくありません。");
+					}
+				}}
+			>確認</Button>
+			{
+				result !== "" && <Label className="text-center">{result === "生存" ? "Tokenは使用可能です。" : "Tokenは使用不可である可能性が高いです。"}</Label>
+			}
+		</DialogTemplate>
+	);
+}
+
 export function DialogTemplate(props: {
-    title: string,
-    button: React.ReactNode
-    className: string,
-    children: React.ReactNode
+	title: string;
+	button: React.ReactNode;
+	className: string;
+	children: React.ReactNode;
 }) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline" className={props.className}>{props.button}</Button>
+				<Button variant="outline" className={props.className}>
+					{props.button}
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>{props.title}</DialogTitle>
 				</DialogHeader>
-				<div className="grid gap-4 py-4">
-					{props.children}
-				</div>
+				<div className="grid gap-4 py-4">{props.children}</div>
 			</DialogContent>
 		</Dialog>
 	);

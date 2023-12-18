@@ -22,9 +22,7 @@ export async function isWorks(token: string): Promise<boolean> {
 		credentials: "include"
 	});
 
-	const data = await resp.json();
-
-	if (data.message.includes("Unauthorized")) {
+	if (resp.status === 401) {
 		return false;
 	} else {
 		return true;

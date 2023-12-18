@@ -1,5 +1,5 @@
 // Token 生存確認用
-import { baseHeaders } from "./baseHeaders.ts";
+import { baseHeaders } from "./baseHeaders";
 
 export async function isWorks(token: string): Promise<boolean> {
 	const resp = await fetch("https://discord.com/api/v9/users/@me/settings", {
@@ -20,4 +20,4 @@ export async function isWorks(token: string): Promise<boolean> {
 	} else {
 		return true;
 	}
-}
+};

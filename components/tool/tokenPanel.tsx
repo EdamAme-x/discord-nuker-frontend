@@ -150,7 +150,9 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						}
 						title={"生存確認"}>
 						<Label className="text-center">Tokenの生存確認を行えます。</Label>
-						<OneToken {...props} />
+						<OneToken />
+						{/* <MultiToken /> */}
+						{/* <PanelToken /> */}
 					</DialogTemplate>
 				</div>
 			</DialogContent>
@@ -158,7 +160,7 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 	);
 }
 
-function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void }) {
+function OneToken() {
 	const [oneToken, setOneToken] = useState<string>("");
 	let [result, setResult] = useState<"" | "生存" | "死亡">("");
 

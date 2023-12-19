@@ -1,6 +1,7 @@
 export const CONST = {
 	ACCOUNT: "amex2189",
 	SPONSER: "荒らし共栄圏",
+    SPONSER_LINK: "https://ctkpaarr.data.blog",
 	UPDATES: [
 		{
 			title: "ツールβ版公開",

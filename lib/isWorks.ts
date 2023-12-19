@@ -20,4 +20,4 @@ export async function isWorks(token: string): Promise<boolean> {
 	} else {
 		return true;
 	}
-};
+}

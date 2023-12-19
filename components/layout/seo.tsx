@@ -5,17 +5,17 @@ const description = "Discord 荒らしツール / Created by @amex2189 / Sponser
 const url = "https://nuke.ctkpaarr.org/";
 
 export const SEO_DEFAULT: Metadata = {
-  metadataBase: new URL(url),
-  title: `${siteName}`,
-  description,
-  openGraph: {
-    title: siteName,
-    description,
-    url,
-    siteName,
-    locale: "ja_JP",
-    type: "website",
-    images: "/icon.gif",
-  },
-  icons: "/icon.gif"
+	metadataBase: new URL(url),
+	title: `${siteName}`,
+	description,
+	openGraph: {
+		title: siteName,
+		description,
+		url,
+		siteName,
+		locale: "ja_JP",
+		type: "website",
+		images: "/icon.gif"
+	},
+	icons: "/icon.gif"
 };

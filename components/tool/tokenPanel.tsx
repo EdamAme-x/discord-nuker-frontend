@@ -171,7 +171,11 @@ function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (da
 				</>
 			}
 			title={"単体生存確認"}>
-			<Input placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXX" value={oneToken} onChange={(e) => setOneToken(e.target.value)} />
+			<Input
+				placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXX"
+				value={oneToken}
+				onChange={e => setOneToken(e.target.value)}
+			/>
 			<Button
 				onClick={async () => {
 					const valid = isToken(oneToken);
@@ -181,17 +185,27 @@ function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (da
 							toast.success("Tokenは使用可能です。");
 							setResult("生存");
 						} else {
-							toast.warn("Tokenは使用不可能である可能性が高いです。")
+							toast.warn("Tokenは使用不可能である可能性が高いです。");
 							setResult("死亡");
 						}
-					}else {
+					} else {
 						toast.error("Tokenの形式が正しくありません。");
 					}
-				}}
-			>確認</Button>
-			{
-				result !== "" && <Label className="text-center">{result === "生存" ? <p>Tokenは使用可能です。</p> : <><p>Tokenは使用不可である可能性が高いです。</p><p>注意: パスワードを変更するとTokenも変わります。</p></>}</Label>
-			}
+				}}>
+				確認
+			</Button>
+			{result !== "" && (
+				<Label className="text-center">
+					{result === "生存" ? (
+						<p>Tokenは使用可能です。</p>
+					) : (
+						<>
+							<p>Tokenは使用不可である可能性が高いです。</p>
+							<p>注意: パスワードを変更するとTokenも変わります。</p>
+						</>
+					)}
+				</Label>
+			)}
 		</DialogTemplate>
 	);
 }

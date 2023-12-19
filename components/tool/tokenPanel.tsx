@@ -178,8 +178,10 @@ function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (da
 
 					if (valid) {
 						if (await isWorks(oneToken)) {
+							toast.success("Tokenは使用可能です。");
 							setResult("生存");
 						} else {
+							toast.warn("Tokenは使用不可能である可能性が高いです。")
 							setResult("死亡");
 						}
 					}else {
@@ -188,7 +190,7 @@ function OneToken(props: { children: React.ReactNode; data: Tokens; setData: (da
 				}}
 			>確認</Button>
 			{
-				result !== "" && <Label className="text-center">{result === "生存" ? <p>Tokenは使用可能です。</p> : <><p>Tokenは使用不可である可能性が高いです。</p><p>不自然な動作で一時的に制限されている可能性もあります。</p></>}</Label>
+				result !== "" && <Label className="text-center">{result === "生存" ? <p>Tokenは使用可能です。</p> : <><p>Tokenは使用不可である可能性が高いです。</p><p>注意: パスワードを変更するとTokenも変わります。</p></>}</Label>
 			}
 		</DialogTemplate>
 	);

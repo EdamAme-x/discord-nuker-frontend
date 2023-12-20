@@ -212,6 +212,11 @@ function OneToken() {
 	);
 }
 
+function MultiToken() {
+	const [multiToken, setMultiToken] = useState<string[]>([""]);
+	let [result, setResult] = useState<("" | "生存" | "死亡")[]>([""]);
+}
+
 export function DialogTemplate(props: {
 	title: string;
 	button: React.ReactNode;

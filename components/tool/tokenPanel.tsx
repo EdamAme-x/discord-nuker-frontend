@@ -32,13 +32,13 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 		props.setData([
 			...props.data,
 			{
-				token: token,
+				token: token
 			}
 		]);
 		LS.set("tokens", [
 			...props.data,
 			{
-				token: token,
+				token: token
 			}
 		]);
 	};
@@ -110,6 +110,7 @@ import {
 } from "@/components/ui/dialog";
 import { MdDelete } from "react-icons/md";
 import { FaFileImport } from "react-icons/fa";
+import { FaFileExport } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { isWorks } from "@/lib/isWorks";
 
@@ -160,14 +161,19 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 	);
 }
 
-function ImportExport() {
-	return <>
-	<Button
-						className="inline-flex justify-center items-center"
-					>
-						<FaFileImport className="transform scale-150 mr-3" /> Import
-					</Button>
-	</>
+function ImportExport(props: {
+	data: Tokens
+}) {
+	return (
+		<div className="grid grid-cols-2 gap-4">
+			<DialogTemplate className="inline-flex justify-center items-center" button={<><FaFileImport className="transform scale-150 mr-3" /> Import</>} title="Import">
+				
+			</DialogTemplate>
+			<DialogTemplate className="inline-flex justify-center items-center" button={<><FaFileExport className="transform scale-150 mr-3" /> Export</>} title="Export">
+				
+			</DialogTemplate>
+		</div>
+	);
 }
 
 function OneToken() {
@@ -193,7 +199,7 @@ function OneToken() {
 					const valid = isToken(oneToken);
 
 					if (valid) {
-						if (await isWorks(oneToken) == "wip") {
+						if ((await isWorks(oneToken)) == "wip") {
 							toast.warn("Tokenは一時的に制限されています。");
 							setResult("制限");
 						} else if (await isWorks(oneToken)) {
@@ -213,14 +219,16 @@ function OneToken() {
 				<Label className="text-center">
 					{result === "生存" ? (
 						<p>Tokenは使用可能です。</p>
-					) : (result === "死亡" ? (
-							<>
-								<p>Tokenは使用不可である可能性が高いです。</p>
-								<p>注意: パスワードを変更するとTokenも変わります。</p>
-							</>
-					) : <>
-						<p>Tokenは一時的に制限されています。</p>
-					</>)}
+					) : result === "死亡" ? (
+						<>
+							<p>Tokenは使用不可である可能性が高いです。</p>
+							<p>注意: パスワードを変更するとTokenも変わります。</p>
+						</>
+					) : (
+						<>
+							<p>Tokenは一時的に制限されています。</p>
+						</>
+					)}
 				</Label>
 			)}
 		</DialogTemplate>
@@ -256,12 +264,14 @@ function MultiToken() {
 
 					if (validTokens.every(valid => valid)) {
 						const results = await Promise.all(tokens.map(token => isWorks(token)));
-						setResults(results.map(result => {
-							if (result === "wip") {
-								return "死亡"
-							}
-							return (result ? "生存" : "死亡")
-						}));
+						setResults(
+							results.map(result => {
+								if (result === "wip") {
+									return "死亡";
+								}
+								return result ? "生存" : "死亡";
+							})
+						);
 						setLiveTokens(tokens.filter((token, i) => results[i]));
 					} else {
 						toast.error("一部のTokenの形式が正しくありません。");
@@ -295,11 +305,12 @@ export function DialogTemplate(props: {
 	button: React.ReactNode;
 	className: string;
 	children: React.ReactNode;
+	outline?: null | booleam
 }) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline" className={props.className}>
+				<Button variant={!props.outline ? "outline" : "default"} className={props.className}>
 					{props.button}
 				</Button>
 			</DialogTrigger>

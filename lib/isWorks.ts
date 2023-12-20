@@ -18,7 +18,7 @@ export async function isWorks(token: string): Promise<boolean | "wip"> {
 	if (resp.status === 401) {
 		return false;
 	} else if ((await resp.json()).code == "40002") {
-		return "wip"
+		return "wip";
 	} else {
 		return true;
 	}

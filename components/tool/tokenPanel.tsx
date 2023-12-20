@@ -165,13 +165,13 @@ import { Copy } from "lucide-react";
 
 function ImportExport(props: { data: Tokens }) {
 	const copyExport = () => {
-		const textarea = document.createElement('textarea');
+		const textarea = document.createElement("textarea");
 		textarea.textContent = props.data.map(data => data.token).join("\n");
 		document.body.appendChild(textarea);
 		textarea.select();
-		document.execCommand('copy');
+		document.execCommand("copy");
 		document.body.removeChild(textarea);
-	}
+	};
 
 	return (
 		<div className="grid grid-cols-2 gap-4">
@@ -203,13 +203,16 @@ function ImportExport(props: { data: Tokens }) {
 						.join("\n")}
 					onChange={() => {}}
 				/>
-				<Button onClick={() => {
-					copyExport()
-				}} size="sm" className="px-3">
+				<Button
+					onClick={() => {
+						copyExport();
+					}}
+					size="sm"
+					className="px-3">
 					<span className="sr-only">Copy</span>
 					<Copy className="h-4 w-4" />
 				</Button>
-</DialogTemplate>
+			</DialogTemplate>
 		</div>
 	);
 }

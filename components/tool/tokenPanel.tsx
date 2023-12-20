@@ -153,15 +153,21 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						<MultiToken />
 						{/* <PanelToken data={props.data} setData={props.setData} /> */}
 					</DialogTemplate>
-					<Button
-						className="inline-flex justify-center items-center"
-					>
-						<FaFileImport className="transform scale-150 mr-3" /> Import
-					</Button>
+					<ImportExport data={props.data} />
 				</div>
 			</DialogContent>
 		</Dialog>
 	);
+}
+
+function ImportExport() {
+	return <>
+	<Button
+						className="inline-flex justify-center items-center"
+					>
+						<FaFileImport className="transform scale-150 mr-3" /> Import
+					</Button>
+	</>
 }
 
 function OneToken() {

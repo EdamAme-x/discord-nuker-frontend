@@ -161,17 +161,55 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 	);
 }
 
-function ImportExport(props: {
-	data: Tokens
-}) {
+import { Copy } from "lucide-react";
+
+function ImportExport(props: { data: Tokens }) {
+	const copyExport = () => {
+		const textarea = document.createElement('textarea');
+		textarea.textContent = props.data.map(data => data.token).join("\n");
+		document.body.appendChild(textarea);
+		textarea.select();
+		document.execCommand('copy');
+		document.body.removeChild(textarea);
+	}
+
 	return (
 		<div className="grid grid-cols-2 gap-4">
-			<DialogTemplate className="inline-flex justify-center items-center" button={<><FaFileImport className="transform scale-150 mr-3" /> Import</>} title="Import">
-				
+			<DialogTemplate
+				className="inline-flex justify-center items-center"
+				button={
+					<>
+						<FaFileImport className="transform scale-150 mr-3" /> Import
+					</>
+				}
+				title="Import"
+				outline={true}>
+				a
 			</DialogTemplate>
-			<DialogTemplate className="inline-flex justify-center items-center" button={<><FaFileExport className="transform scale-150 mr-3" /> Export</>} title="Export">
-				
-			</DialogTemplate>
+			<DialogTemplate
+				className="inline-flex justify-center items-center"
+				button={
+					<>
+						<FaFileExport className="transform scale-150 mr-3" /> Export
+					</>
+				}
+				title="Export"
+				outline={true}>
+				<Textarea
+					value={props.data
+						.map(data => {
+							return data.token;
+						})
+						.join("\n")}
+					onChange={() => {}}
+				/>
+				<Button onClick={() => {
+					copyExport()
+				}} size="sm" className="px-3">
+					<span className="sr-only">Copy</span>
+					<Copy className="h-4 w-4" />
+				</Button>
+</DialogTemplate>
 		</div>
 	);
 }
@@ -305,7 +343,7 @@ export function DialogTemplate(props: {
 	button: React.ReactNode;
 	className: string;
 	children: React.ReactNode;
-	outline?: null | booleam
+	outline?: null | booleam;
 }) {
 	return (
 		<Dialog>

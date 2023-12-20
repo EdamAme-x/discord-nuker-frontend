@@ -33,14 +33,12 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 			...props.data,
 			{
 				token: token,
-				isEnabled: true
 			}
 		]);
 		LS.set("tokens", [
 			...props.data,
 			{
 				token: token,
-				isEnabled: true
 			}
 		]);
 	};
@@ -111,6 +109,7 @@ import {
 	DialogTrigger
 } from "@/components/ui/dialog";
 import { MdDelete } from "react-icons/md";
+import { FaFileImport } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { isWorks } from "@/lib/isWorks";
 
@@ -134,7 +133,7 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 							if (password !== answer) {
 								toast.error("文字列が違うか、入力されていません。");
 							} else {
-								LS.remove("tokens");
+								LS.set("tokens", []);
 								props.setData([]);
 								toast.success("削除成功");
 							}
@@ -151,9 +150,14 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						title={"生存確認"}>
 						<Label className="text-center">Tokenの生存確認を行えます。</Label>
 						<OneToken />
-						{/* <MultiToken /> */}
-						{/* <PanelToken /> */}
+						<MultiToken />
+						{/* <PanelToken data={props.data} setData={props.setData} /> */}
 					</DialogTemplate>
+					<Button
+						className="inline-flex justify-center items-center"
+					>
+						<FaFileImport className="transform scale-150 mr-3" /> Import
+					</Button>
 				</div>
 			</DialogContent>
 		</Dialog>
@@ -162,7 +166,7 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 
 function OneToken() {
 	const [oneToken, setOneToken] = useState<string>("");
-	let [result, setResult] = useState<"" | "生存" | "死亡">("");
+	const [result, setResult] = useState<"" | "生存" | "死亡" | "制限">("");
 
 	return (
 		<DialogTemplate
@@ -183,11 +187,14 @@ function OneToken() {
 					const valid = isToken(oneToken);
 
 					if (valid) {
-						if (await isWorks(oneToken)) {
+						if (await isWorks(oneToken) == "wip") {
+							toast.warn("Tokenは一時的に制限されています。");
+							setResult("制限");
+						} else if (await isWorks(oneToken)) {
 							toast.success("Tokenは使用可能です。");
 							setResult("生存");
 						} else {
-							toast.warn("Tokenは使用不可能である可能性が高いです。");
+							toast.error("Tokenは使用不可能である可能性が高いです。");
 							setResult("死亡");
 						}
 					} else {
@@ -200,21 +207,81 @@ function OneToken() {
 				<Label className="text-center">
 					{result === "生存" ? (
 						<p>Tokenは使用可能です。</p>
-					) : (
-						<>
-							<p>Tokenは使用不可である可能性が高いです。</p>
-							<p>注意: パスワードを変更するとTokenも変わります。</p>
-						</>
-					)}
+					) : (result === "死亡" ? (
+							<>
+								<p>Tokenは使用不可である可能性が高いです。</p>
+								<p>注意: パスワードを変更するとTokenも変わります。</p>
+							</>
+					) : <>
+						<p>Tokenは一時的に制限されています。</p>
+					</>)}
 				</Label>
 			)}
 		</DialogTemplate>
 	);
 }
 
+import { Textarea } from "@/components/ui/textarea";
+
 function MultiToken() {
-	const [multiToken, setMultiToken] = useState<string[]>([""]);
-	let [result, setResult] = useState<("" | "生存" | "死亡")[]>([""]);
+	const [multiToken, setMultiToken] = useState<string>("");
+	let [results, setResults] = useState<("" | "生存" | "死亡")[]>([""]);
+	let [liveTokens, setLiveTokens] = useState<string[]>([]);
+
+	return (
+		<DialogTemplate
+			className="inline-flex justify-center items-center"
+			button={
+				<>
+					<FaCheckCircle className="transform scale-[1.2] mr-3" /> 複数のTokenを生存確認
+				</>
+			}
+			title={"複数生存確認"}>
+			<Label>改行してTokenを入力して下さい。</Label>
+			<Textarea
+				placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXX"
+				value={multiToken}
+				onChange={e => setMultiToken(e.target.value)}
+			/>
+			<Button
+				onClick={async () => {
+					const tokens = multiToken.split("\n");
+					const validTokens = tokens.map(token => isToken(token));
+
+					if (validTokens.every(valid => valid)) {
+						const results = await Promise.all(tokens.map(token => isWorks(token)));
+						setResults(results.map(result => {
+							if (result === "wip") {
+								return "死亡"
+							}
+							return (result ? "生存" : "死亡")
+						}));
+						setLiveTokens(tokens.filter((token, i) => results[i]));
+					} else {
+						toast.error("一部のTokenの形式が正しくありません。");
+					}
+				}}>
+				確認
+			</Button>
+			{results.length > 0 && (
+				<Label className="text-center">
+					{results.filter(result => result === "生存").length === results.length ? (
+						<p>全て生存しています。</p>
+					) : results.filter(result => result === "生存").length > 0 ? (
+						<p>
+							{results.length - results.filter(result => result === "生存").length}個のTokenが使用不可能で
+							{results.filter(result => result === "生存").length}個が使用可能です。
+						</p>
+					) : (
+						<p>全てのTokenが使用不可能です。</p>
+					)}
+				</Label>
+			)}
+			{liveTokens.length > 0 && (
+				<Textarea value={liveTokens.join("\n")} onChange={() => {}} placeholder="生存しているToken" />
+			)}
+		</DialogTemplate>
+	);
 }
 
 export function DialogTemplate(props: {

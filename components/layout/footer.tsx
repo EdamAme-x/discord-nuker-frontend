@@ -15,9 +15,14 @@ export function Footer() {
 				<Accordion type="single" collapsible className="w-full">
 					{CONST.UPDATES.map((update, i) => (
 						<CardContent key={i}>
-							<AccordionItem value="item-1">
-								<AccordionTrigger>Is it accessible?</AccordionTrigger>
-								<AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+							<AccordionItem value={"item-" + i}>
+								<AccordionTrigger>
+									<HiSpeakerphone /> {update.title}
+								</AccordionTrigger>
+								<AccordionContent className="w-4/5 mx-auto">
+									<p className="text-xs">{update.date}</p>
+									{update.content}
+								</AccordionContent>
 							</AccordionItem>
 						</CardContent>
 					))}

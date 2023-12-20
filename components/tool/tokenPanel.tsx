@@ -154,7 +154,7 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						<MultiToken />
 						{/* <PanelToken data={props.data} setData={props.setData} /> */}
 					</DialogTemplate>
-					<ImportExport data={props.data} />
+					<ImportExport data={props.data} setData={props.setData} />
 				</div>
 			</DialogContent>
 		</Dialog>
@@ -162,16 +162,63 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 }
 
 import { Copy } from "lucide-react";
+import { removeSpace } from "@/lib/removeSpace";
+import { removeSomeVal } from "@/lib/removeSomeVal";
 
-function ImportExport(props: { data: Tokens }) {
+function ImportExport(props: { data: Tokens, setData: (data: Tokens) => void }) {
 	const copyExport = () => {
-		const textarea = document.createElement("textarea");
-		textarea.textContent = props.data.map(data => data.token).join("\n");
-		document.body.appendChild(textarea);
-		textarea.select();
-		document.execCommand("copy");
-		document.body.removeChild(textarea);
+		try {
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(props.data.map(data => data.token).join("\n"));
+			} else {
+				const textarea = document.createElement("textarea");
+				textarea.textContent = props.data.map(data => data.token).join("\n");
+				document.body.appendChild(textarea);
+				textarea.select();
+				document.execCommand("copy");
+				document.body.removeChild(textarea);
+			}
+
+			toast.success("コピー完了！")
+		}catch {
+			toast.error("コピーに失敗しました。手動でコピーお願いします。")
+		}
 	};
+
+	const [importToken, setImportToken] = useState<string>("");
+
+	const tokenImport = () => {
+		const tokens = removeSpace(importToken).split("\n")
+		let isOk = true;
+		let fails = 0;
+		tokens.map(token => {
+			if (!isToken(token)) {
+				isOk = false;
+				fails++;
+			}
+		})
+
+		if (!isOk) {
+			toast.error("Tokenの形式がおかしい物が" + fails + "個含まれています。")
+			return;
+		}
+
+		const mode = prompt("Tokenを置き換えますか？ (Nの場合追加されます。) Y/N") === "Y" ? true : false
+
+		if (mode) {
+			props.setData(removeSomeVal(tokens.map(token => {
+				return {
+					token: token
+				}
+			})))
+		}else {
+			props.setData(removeSomeVal([...props.data, ...(tokens.map(token => {
+				return {
+					token: token
+				}
+			}))]))
+		}
+	}
 
 	return (
 		<div className="grid grid-cols-2 gap-4">
@@ -184,7 +231,17 @@ function ImportExport(props: { data: Tokens }) {
 				}
 				title="Import"
 				outline={true}>
-				a
+				<Label>改行で区切ったものを入力して下さい。</Label>
+				<Textarea 
+					value={importToken}
+					onChange={((e) => {
+						setImportToken(e.target.value)
+					})}
+					placeholder={"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+				/>
+				<Button onClick={() => {
+					tokenImport()
+				}}>Import</Button>
 			</DialogTemplate>
 			<DialogTemplate
 				className="inline-flex justify-center items-center"
@@ -346,7 +403,7 @@ export function DialogTemplate(props: {
 	button: React.ReactNode;
 	className: string;
 	children: React.ReactNode;
-	outline?: null | booleam;
+	outline?: null | boolean;
 }) {
 	return (
 		<Dialog>

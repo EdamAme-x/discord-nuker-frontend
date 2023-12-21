@@ -1,6 +1,7 @@
-import { ThemeSwitch } from "./theme";
 import Image from "next/image";
+
 import { Label } from "@/components/ui/label";
+import { ThemeSwitch } from "./theme";
 
 export function Header() {
 	return (

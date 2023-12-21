@@ -1,11 +1,13 @@
 "use client";
+
 import { useState } from "react";
 import { Tokens } from "@/types/data";
+
 import { LS } from "@/lib/ls";
 import { Button } from "../ui/button";
-import { TokenPanel } from "./tokenPanel";
-import { Label } from "../ui/label";
 import { AlertDestructive } from "../ui/error";
+import { Label } from "../ui/label";
+import { TokenPanel } from "./tokenPanel";
 
 export function Tool() {
 	const [data, setData] = useState<Tokens>(() => {

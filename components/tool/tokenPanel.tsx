@@ -1,14 +1,36 @@
-import { Tokens } from "@/types/data";
-import { LS } from "@/lib/ls";
-import { MultiSelect } from "@/components/ui/multi-select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { Tokens } from "@/types/data";
+import { toast, ToastContainer } from "react-toastify";
+
 import { isToken } from "@/lib/isToken";
-import { ToastContainer, toast } from "react-toastify";
+import { LS } from "@/lib/ls";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { MultiSelect } from "@/components/ui/multi-select";
+
 import "react-toastify/dist/ReactToastify.css";
+
+import { Copy } from "lucide-react";
+import { FaCheckCircle, FaFileExport, FaFileImport } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
+
+import { isWorks } from "@/lib/isWorks";
+import { removeSomeVal } from "@/lib/removeSomeVal";
+import { removeSpace } from "@/lib/removeSpace";
+/* SETTING */
+
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 
 export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => void }) {
 	const [token, setToken] = useState<string>("");
@@ -97,23 +119,6 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 	);
 }
 
-/* SETTING */
-
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger
-} from "@/components/ui/dialog";
-import { MdDelete } from "react-icons/md";
-import { FaFileImport } from "react-icons/fa";
-import { FaFileExport } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
-import { isWorks } from "@/lib/isWorks";
-
 export function Setting(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void }) {
 	return (
 		<Dialog>
@@ -161,11 +166,7 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 	);
 }
 
-import { Copy } from "lucide-react";
-import { removeSpace } from "@/lib/removeSpace";
-import { removeSomeVal } from "@/lib/removeSomeVal";
-
-function ImportExport(props: { data: Tokens, setData: (data: Tokens) => void }) {
+function ImportExport(props: { data: Tokens; setData: (data: Tokens) => void }) {
 	const copyExport = () => {
 		try {
 			if (navigator.clipboard) {
@@ -179,16 +180,16 @@ function ImportExport(props: { data: Tokens, setData: (data: Tokens) => void }) 
 				document.body.removeChild(textarea);
 			}
 
-			toast.success("コピー完了！")
-		}catch {
-			toast.error("コピーに失敗しました。手動でコピーお願いします。")
+			toast.success("コピー完了！");
+		} catch {
+			toast.error("コピーに失敗しました。手動でコピーお願いします。");
 		}
 	};
 
 	const [importToken, setImportToken] = useState<string>("");
 
 	const tokenImport = () => {
-		const tokens = removeSpace(importToken).split("\n")
+		const tokens = removeSpace(importToken).split("\n");
 		let isOk = true;
 		let fails = 0;
 		tokens.map(token => {
@@ -196,29 +197,38 @@ function ImportExport(props: { data: Tokens, setData: (data: Tokens) => void }) 
 				isOk = false;
 				fails++;
 			}
-		})
+		});
 
 		if (!isOk) {
-			toast.error("Tokenの形式がおかしい物が" + fails + "個含まれています。")
+			toast.error("Tokenの形式がおかしい物が" + fails + "個含まれています。");
 			return;
 		}
 
-		const mode = prompt("Tokenを置き換えますか？ (Nの場合追加されます。) Y/N") === "Y" ? true : false
+		const mode = prompt("Tokenを置き換えますか？ (Nの場合追加されます。) Y/N") === "Y" ? true : false;
 
 		if (mode) {
-			props.setData(removeSomeVal(tokens.map(token => {
-				return {
-					token: token
-				}
-			})))
-		}else {
-			props.setData(removeSomeVal([...props.data, ...(tokens.map(token => {
-				return {
-					token: token
-				}
-			}))]))
+			props.setData(
+				removeSomeVal(
+					tokens.map(token => {
+						return {
+							token: token
+						};
+					})
+				)
+			);
+		} else {
+			props.setData(
+				removeSomeVal([
+					...props.data,
+					...tokens.map(token => {
+						return {
+							token: token
+						};
+					})
+				])
+			);
 		}
-	}
+	};
 
 	return (
 		<div className="grid grid-cols-2 gap-4">
@@ -232,16 +242,19 @@ function ImportExport(props: { data: Tokens, setData: (data: Tokens) => void }) 
 				title="Import"
 				outline={true}>
 				<Label>改行で区切ったものを入力して下さい。</Label>
-				<Textarea 
+				<Textarea
 					value={importToken}
-					onChange={((e) => {
-						setImportToken(e.target.value)
-					})}
+					onChange={e => {
+						setImportToken(e.target.value);
+					}}
 					placeholder={"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
 				/>
-				<Button onClick={() => {
-					tokenImport()
-				}}>Import</Button>
+				<Button
+					onClick={() => {
+						tokenImport();
+					}}>
+					Import
+				</Button>
 			</DialogTemplate>
 			<DialogTemplate
 				className="inline-flex justify-center items-center"
@@ -332,8 +345,6 @@ function OneToken() {
 		</DialogTemplate>
 	);
 }
-
-import { Textarea } from "@/components/ui/textarea";
 
 function MultiToken() {
 	const [multiToken, setMultiToken] = useState<string>("");

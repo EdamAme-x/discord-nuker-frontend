@@ -1,8 +1,9 @@
+import { CONST } from "@/cons";
+import { HiSpeakerphone } from "react-icons/hi";
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { HiSpeakerphone } from "react-icons/hi";
-import { CONST } from "@/cons";
 
 export function Footer() {
 	return (

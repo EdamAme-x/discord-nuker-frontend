@@ -35,6 +35,7 @@ import { Textarea } from "@/components/ui/textarea";
 export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => void }) {
 	const [token, setToken] = useState<string>("");
 	const [tokenCheck, setTokenCheck] = useState<boolean>(false); // 厳格な管理の為に敢えてuseState
+	const [max, setMax] = useState<number>(4);
 
 	const addToken = () => {
 		if (props.data.find(i => i.token === token)) {
@@ -69,7 +70,10 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 		<div className="w-[350px] flex flex-col justify-center items-center">
 			<Label className="text-xl font-bold w-full px-[5px] inline-flex justify-center items-center my-3">
 				TokenPanel{" "}
-				<Setting data={props.data} setData={props.setData}>
+				<Setting data={props.data} setData={props.setData} settings={{
+					max,
+					setMax
+				}}>
 					<IoSettingsSharp className="ml-auto" />
 				</Setting>
 			</Label>
@@ -83,13 +87,13 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 				selected={props.data.map(i => i.token)}
 				// @ts-ignore NOTE: LIB SIDE ERROR
 				onChange={(e: string) => {
-					// @ts-ignore NOTE: LIB SIDE ERROR
 					const result = props.data.filter(d => d.token !== e);
 					props.setData(result);
 					LS.set("tokens", result);
 				}}
 				className="w-[340px]"
 				suppressHydrationWarning={true}
+				max={max}
 			/>
 			<div className="w-full flex justify-around items-center">
 				<Input
@@ -119,7 +123,10 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 	);
 }
 
-export function Setting(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void }) {
+export function Setting(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void; settings: {
+	max: number,
+	setMax: (max: number) => void
+} }) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{props.children}</DialogTrigger>
@@ -160,6 +167,18 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						{/* <PanelToken data={props.data} setData={props.setData} /> */}
 					</DialogTemplate>
 					<ImportExport data={props.data} setData={props.setData} />
+					<div className="grid grid-cols-2 gap-3 items-center">
+						<Label title="一度にPreview出来るTokenの数を設定します。" className="text-center">Token Preview</Label>
+						<Input 
+							type="range"
+							max={props.data.length > 4 ? props.data.length : 4}
+							min={1}
+							value={props.settings.max}
+							onChange={(e) => {
+								props.settings.setMax(e.target.value)
+							}}
+						/>
+					</div>
 				</div>
 			</DialogContent>
 		</Dialog>

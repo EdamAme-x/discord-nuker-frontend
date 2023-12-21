@@ -17,9 +17,10 @@ interface MultiSelectProps {
 	selected: string[];
 	onChange: React.Dispatch<React.SetStateAction<string>>;
 	className?: string;
+	max?: number;
 }
 
-function MultiSelect({ options, selected, onChange, className, ...props }: MultiSelectProps) {
+function MultiSelect({ options, selected, onChange, className, max, ...props }: MultiSelectProps) {
 	const [open, setOpen] = React.useState(false);
 
 	const handleUnselect = (item: string) => {
@@ -36,7 +37,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
 					className={`w-full justify-between ${selected.length > 1 ? "h-full" : "h-10"}`}
 					onClick={() => setOpen(!open)}>
 					<div className="flex gap-1 flex-wrap">
-						{selected.slice(0, 4).map(item => (
+						{selected.slice(0, (max ?? 4)).map(item => (
 							<Badge variant="secondary" key={item} className="mr-1 mb-1">
 								{item.length > 8 ? item.substring(0, 7) + "..." : item}
 								<button
@@ -58,7 +59,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
 								</button>
 							</Badge>
 						))}
-						{selected.length > 4 && (
+						{selected.length > (max ?? 4) && (
 							<Badge variant="secondary" className="mr-1 mb-1">
 								...
 							</Badge>

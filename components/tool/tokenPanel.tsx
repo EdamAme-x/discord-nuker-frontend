@@ -175,7 +175,7 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 							min={1}
 							value={props.settings.max}
 							onChange={(e) => {
-								props.settings.setMax(e.target.value)
+								props.settings.setMax(parseInt(e.target.value))
 							}}
 						/>
 					</div>

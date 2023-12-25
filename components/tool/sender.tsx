@@ -124,8 +124,8 @@ function Presets(props: {
 }) {
     const [ preset, setPreset ] = useState("");
 
-    const selectPreset = (i) => {
-        setPreset(presets[i].replace("\n", ""))
+    const selectPreset = (i: string) => {
+        setPreset(presets[parseInt(i)].replace("\n", ""))
     }
 
     const patch = () => {
@@ -144,7 +144,7 @@ function Presets(props: {
 						<SelectGroup>
 							<SelectLabel>Presets</SelectLabel>
 							{presets.map((preset, i) => (
-								<SelectItem key={i} value={i}>
+								<SelectItem key={i} value={i.toString()}>
 									{preset}
 								</SelectItem>
 							))}

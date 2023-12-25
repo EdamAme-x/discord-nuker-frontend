@@ -15,7 +15,7 @@ export async function sendMessage(channelId: string, message: string, token: str
 			"x-discord-locale": "ja",
 			"x-discord-timezone": "Asia/Tokyo",
 		},
-		referrer: "https://discord.com/channels/1115195558743781408/" + channelId,
+		referrer: "https://discord.com",
 		referrerPolicy: "strict-origin-when-cross-origin",
 		body: JSON.stringify({ mobile_network_type: "unknown", content: message, tts: false, flags: 0 }),
 		method: "POST",

@@ -9,13 +9,17 @@ export async function sendMessage(channelId: string, message: string, token: str
 			"sec-ch-ua-mobile": "?0",
 			"sec-ch-ua-platform": '"Windows"',
 			"sec-fetch-dest": "empty",
+			"sec-fetch-mode": "cors",
+			"sec-fetch-site": "same-origin",
 			"x-debug-options": "bugReporterEnabled",
 			"x-discord-locale": "ja",
 			"x-discord-timezone": "Asia/Tokyo",
 		},
+		referrer: "https://discord.com/channels/1115195558743781408/" + channelId,
+		referrerPolicy: "strict-origin-when-cross-origin",
 		body: JSON.stringify({ mobile_network_type: "unknown", content: message, tts: false, flags: 0 }),
 		method: "POST",
-		mode: "no-cors",
+		mode: "cors",
 		credentials: "include"
 	});
 

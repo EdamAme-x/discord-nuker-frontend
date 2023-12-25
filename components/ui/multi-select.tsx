@@ -37,7 +37,7 @@ function MultiSelect({ options, selected, onChange, className, max, ...props }: 
 					className={`w-full justify-between ${selected.length > 1 ? "h-full" : "h-10"}`}
 					onClick={() => setOpen(!open)}>
 					<div className="flex gap-1 flex-wrap">
-						{selected.slice(0, (max ?? 4)).map(item => (
+						{selected.slice(0, max ?? 4).map(item => (
 							<Badge variant="secondary" key={item} className="mr-1 mb-1">
 								{item.length > 8 ? item.substring(0, 7) + "..." : item}
 								<button

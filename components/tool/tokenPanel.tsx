@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tokens } from "@/types/data";
+import { Token, Tokens } from "@/types/data";
 import { toast, ToastContainer } from "react-toastify";
 
 import { isToken } from "@/lib/isToken";
@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Copy } from "lucide-react";
 import { FaCheckCircle, FaFileExport, FaFileImport } from "react-icons/fa";
+import { GrFormView } from "react-icons/gr";
 import { IoSettingsSharp } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 
@@ -70,10 +71,13 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 		<div className="w-[350px] flex flex-col justify-center items-center">
 			<Label className="text-xl font-bold w-full px-[5px] inline-flex justify-center items-center my-3">
 				TokenPanel{" "}
-				<Setting data={props.data} setData={props.setData} settings={{
-					max,
-					setMax
-				}}>
+				<Setting
+					data={props.data}
+					setData={props.setData}
+					settings={{
+						max,
+						setMax
+					}}>
 					<IoSettingsSharp className="ml-auto" />
 				</Setting>
 			</Label>
@@ -123,10 +127,15 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 	);
 }
 
-export function Setting(props: { children: React.ReactNode; data: Tokens; setData: (data: Tokens) => void; settings: {
-	max: number,
-	setMax: (max: number) => void
-} }) {
+export function Setting(props: {
+	children: React.ReactNode;
+	data: Tokens;
+	setData: (data: Tokens) => void;
+	settings: {
+		max: number;
+		setMax: (max: number) => void;
+	};
+}) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{props.children}</DialogTrigger>
@@ -167,15 +176,17 @@ export function Setting(props: { children: React.ReactNode; data: Tokens; setDat
 						{/* <PanelToken data={props.data} setData={props.setData} /> */}
 					</DialogTemplate>
 					<ImportExport data={props.data} setData={props.setData} />
-					<div className="grid grid-cols-2 gap-3 items-center">
-						<Label title="一度にPreview出来るTokenの数を設定します。" className="text-center">Token Preview</Label>
-						<Input 
+					<div className="flex items-center">
+						<Label className="inline-flex justify-center items-center px-5">
+							<GrFormView className="mr-3 transform scale-[2]" /> {props.settings.max}
+						</Label>
+						<Input
 							type="range"
 							max={props.data.length > 4 ? props.data.length : 4}
 							min={1}
 							value={props.settings.max}
-							onChange={(e) => {
-								props.settings.setMax(parseInt(e.target.value))
+							onChange={e => {
+								props.settings.setMax(parseInt(e.target.value));
 							}}
 						/>
 					</div>
@@ -211,8 +222,15 @@ function ImportExport(props: { data: Tokens; setData: (data: Tokens) => void }) 
 		const tokens = removeSpace(importToken).split("\n");
 		let isOk = true;
 		let fails = 0;
-		tokens.map(token => {
-			if (!isToken(token)) {
+		const uniqueTokens = removeSomeVal<Token>(
+			tokens.map(token => {
+				return {
+					token: token
+				};
+			})
+		);
+		uniqueTokens.map((token: Token) => {
+			if (!isToken(token.token)) {
 				isOk = false;
 				fails++;
 			}
@@ -226,27 +244,12 @@ function ImportExport(props: { data: Tokens; setData: (data: Tokens) => void }) 
 		const mode = prompt("Tokenを置き換えますか？ (Nの場合追加されます。) Y/N") === "Y" ? true : false;
 
 		if (mode) {
-			props.setData(
-				removeSomeVal(
-					tokens.map(token => {
-						return {
-							token: token
-						};
-					})
-				)
-			);
+			props.setData(uniqueTokens);
 		} else {
-			props.setData(
-				removeSomeVal([
-					...props.data,
-					...tokens.map(token => {
-						return {
-							token: token
-						};
-					})
-				])
-			);
+			props.setData(removeSomeVal<Token>([...props.data, ...uniqueTokens]));
 		}
+
+		toast.success("Importに成功しました");
 	};
 
 	return (

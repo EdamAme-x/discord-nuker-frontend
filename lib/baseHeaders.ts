@@ -8,4 +8,4 @@ export const baseHeaders = {
 	"sec-fetch-site": "cross-site",
 	accept: "/",
 	"accept-language": "ja,en-US;q=0.9,en;q=0.8"
-};
+} as const;

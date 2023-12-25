@@ -43,6 +43,7 @@ body::-webkit-scrollbar {
  
     --radius: 0.5rem;
   }
+  /* RED MODE WIP */
  
   .dark {
     --background: 0 0% 3.9%;

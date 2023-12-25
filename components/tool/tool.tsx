@@ -7,6 +7,7 @@ import { LS } from "@/lib/ls";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../ui/error";
 import { Label } from "../ui/label";
+import { Sender } from "./sender";
 import { TokenPanel } from "./tokenPanel";
 
 export function Tool() {
@@ -30,6 +31,11 @@ export function Tool() {
 				<div className="h-[50vh] flex flex-col justify-center items-center">
 					<AlertDestructive text={"TOKEN が追加されていません。"} />
 				</div>
+			)}
+			{data.length > 0 && (
+				<>
+					<Sender data={data} setData={setData} />
+				</>
 			)}
 		</div>
 	);

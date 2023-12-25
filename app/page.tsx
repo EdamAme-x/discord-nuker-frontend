@@ -1,3 +1,5 @@
+import { FaCircleQuestion } from "react-icons/fa6";
+
 import { Layout } from "@/components/layout/layout";
 import { Tool } from "@/components/tool/tool";
 
@@ -9,6 +11,9 @@ export default function Home() {
 				<h2>Discord 荒らしツール</h2>
 			</div>
 			<Tool />
+			<a href="/manual" className="fixed z-[10] bottom-[30px] right-[30px] transform scale-[2]">
+				<FaCircleQuestion />
+			</a>
 		</Layout>
 	);
 }

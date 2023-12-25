@@ -25,7 +25,7 @@ export function Tool() {
 	});
 
 	return (
-		<div className="w-screen flex flex-col justify-center items-center">
+		<div className="w-screen flex flex-col justify-center items-center space-y-4">
 			<TokenPanel data={data} setData={setData} />
 			{data.length <= 0 && (
 				<div className="h-[50vh] flex flex-col justify-center items-center">

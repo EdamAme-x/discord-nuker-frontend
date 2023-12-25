@@ -76,11 +76,28 @@ export function Setting(props: {
 					<DialogTitle>Settings</DialogTitle>
 				</DialogHeader>
 				<div className="grid gap-4 py-4">
-
+                    <Preview {...props} />
                 </div>
 			</DialogContent>
 		</Dialog>
 	);
+}
+
+function Preview(props: {
+	children: React.ReactNode;
+	data: Tokens;
+	setData: (data: Tokens) => void;
+    settings: {
+        sendMessage: string,
+        setSendMessage: (sendMessage: string) => void
+    }
+}) {
+    return <DialogTemplate title="Preview" button={<>Preview</>} className="">
+        <Textarea
+            value={messageParser(props.settings.sendMessage)}
+            readOnly
+        />
+    </DialogTemplate>
 }
 
 export function DialogTemplate(props: {

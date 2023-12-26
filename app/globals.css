@@ -84,3 +84,9 @@ body::-webkit-scrollbar {
     @apply bg-background text-foreground;
   }
 }
+
+body > nextjs-portal {
+  display: none !important;
+}
+
+/* Ignore Error */

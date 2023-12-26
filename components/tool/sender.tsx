@@ -45,6 +45,16 @@ https://twitter.com/amex2189?{{random2}}
 `
 ];
 
+type Config = {
+	interval: number;
+	channels: string[];
+};
+
+const initConfig: Config = {
+	interval: 1000,
+	channels: []
+};
+
 export function Sender(props: { data: Tokens; setData: (data: Tokens) => void }) {
 	const [sendMessage, setSendMessage] = useState<string>("こんにちは！ 荒らし共栄圏万歳！ {{random}}");
 
@@ -68,11 +78,44 @@ export function Sender(props: { data: Tokens; setData: (data: Tokens) => void })
 					setSendMessage(e.target.value);
 				}}
 			/>
+			<div className="mt-5 w-4/5">
+				<OperationPanel {...props} />
+			</div>
 		</div>
 	);
 }
 
-export function Setting(props: {
+function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void }) {
+	const [config, setConfig] = useState<Config>(initConfig);
+
+	return (
+		<div className="flex flex-col justify-center items-center space-y-2">
+			<Label className="my-3">Interval</Label>
+			<Input
+				type="number"
+				value={config.interval}
+				onChange={e => {
+					setConfig({
+						...config,
+						interval: parseInt(e.target.value)
+					});
+				}}
+			/>
+			<Label className="my-3">Channels</Label>
+			<Textarea
+				value={config.channels.join("\n")}
+				onChange={(e) => {
+					setConfig({
+						...config,
+						channels: e.target.value.split("\n")
+					});
+				}}
+			/>
+		</div>
+	);
+}
+
+function Setting(props: {
 	children: React.ReactNode;
 	data: Tokens;
 	setData: (data: Tokens) => void;
@@ -122,20 +165,20 @@ function Presets(props: {
 		setSendMessage: (sendMessage: string) => void;
 	};
 }) {
-    const [ preset, setPreset ] = useState("");
+	const [preset, setPreset] = useState("");
 
-    const selectPreset = (i: string) => {
-        setPreset(presets[parseInt(i)].replace("\n", ""))
-    }
+	const selectPreset = (i: string) => {
+		setPreset(presets[parseInt(i)].replace("\n", ""));
+	};
 
-    const patch = () => {
-        props.settings.setSendMessage(preset)
-    }
+	const patch = () => {
+		props.settings.setSendMessage(preset);
+	};
 
 	return (
 		<DialogTemplate title="Presets" button={<>Presets</>} className="">
 			<div className="w-full flex flex-col justify-center items-center space-y-3">
-                <Label>困ったときはこれ！</Label>
+				<Label>困ったときはこれ！</Label>
 				<Select onValueChange={selectPreset}>
 					<SelectTrigger className="w-[180px]">
 						<SelectValue placeholder="Presets" />
@@ -152,13 +195,13 @@ function Presets(props: {
 					</SelectContent>
 				</Select>
 			</div>
-            <Textarea 
-                value={preset}
-                onChange={(e) => {
-                    setPreset(e.target.value)
-                }}
-            />
-            <Button onClick={patch}>Patch</Button>
+			<Textarea
+				value={preset}
+				onChange={e => {
+					setPreset(e.target.value);
+				}}
+			/>
+			<Button onClick={patch}>Patch</Button>
 		</DialogTemplate>
 	);
 }

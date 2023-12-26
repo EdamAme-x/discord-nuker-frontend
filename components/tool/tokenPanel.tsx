@@ -127,7 +127,7 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 	);
 }
 
-export function Setting(props: {
+function Setting(props: {
 	children: React.ReactNode;
 	data: Tokens;
 	setData: (data: Tokens) => void;

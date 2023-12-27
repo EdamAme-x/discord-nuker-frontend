@@ -58,8 +58,7 @@ const initConfig: Config = {
 };
 
 export function Sender(props: { data: Tokens; setData: (data: Tokens) => void }) {
-	const [sendMessage, setSendMessage] = useState<string>(`
-<@everyone>
+	const [sendMessage, setSendMessage] = useState<string>(`<@everyone>
 # 荒らし共栄圏最強
 # [荒らし共栄圏に参加](https://ctkpaarr.data.blog/#Discord)
 https://ctkpaarr.data.blog/

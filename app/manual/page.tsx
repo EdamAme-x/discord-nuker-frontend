@@ -1,4 +1,5 @@
 import { IoHomeSharp } from "react-icons/io5";
+import { Label } from "@/components/ui/label";
 
 import { Layout } from "@/components/layout/layout";
 
@@ -16,6 +17,9 @@ export default function Manual() {
 			<a href="/" className="fixed z-[10] bottom-[30px] right-[30px] transform scale-[2]">
 				<IoHomeSharp />
 			</a>
+			<div className="w-full flex justify-center items-center">
+				<Label className="">Help</Label>
+			</div>
 		</Layout>
 	);
 }

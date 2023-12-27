@@ -37,7 +37,7 @@ export function Tool() {
 				<>
 					<Sender data={data} setData={setData} />
 					<Reaction data={data} setData={setData} />
-					<Label>Joiner, etc 近日公開</Label>
+					<Label>Joiner, randomMention, withProxy etc 近日公開</Label>
 				</>
 			)}
 		</div>

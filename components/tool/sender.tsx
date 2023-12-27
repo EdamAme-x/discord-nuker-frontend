@@ -58,7 +58,19 @@ const initConfig: Config = {
 };
 
 export function Sender(props: { data: Tokens; setData: (data: Tokens) => void }) {
-	const [sendMessage, setSendMessage] = useState<string>("こんにちは！ 荒らし共栄圏万歳！ {{random}}");
+	const [sendMessage, setSendMessage] = useState<string>(`
+<@everyone>
+# 荒らし共栄圏最強
+# [荒らし共栄圏に参加](https://ctkpaarr.data.blog/#Discord)
+https://ctkpaarr.data.blog/
+https://discord.gg/annycW3Xrk
+# 荒らし共栄圏万歳
+ーーーーーーーーーーーーーーーー
+（画像） https://imgur.com/LacFtDP
+（画像） https://imgur.com/gQkpAYe
+（画像） https://imgur.com/mOlUpn3	
+{{random2}}
+`);
 
 	return (
 		<div className="w-[350px] flex flex-col justify-center items-center">

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tokens } from "@/types/data";
 import { IoSettingsSharp } from "react-icons/io5";
 
+import { removeReturn } from "@/lib/removeReturn";
+import { sendMessage as sendMessager } from "@/lib/send/sendMessage";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -79,38 +81,105 @@ export function Sender(props: { data: Tokens; setData: (data: Tokens) => void })
 				}}
 			/>
 			<div className="mt-5 w-4/5">
-				<OperationPanel {...props} />
+				<OperationPanel {...props} sendMessage={sendMessage} />
 			</div>
 		</div>
 	);
 }
 
-function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void }) {
+function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void; sendMessage: string }) {
 	const [config, setConfig] = useState<Config>(initConfig);
+	const [log, setLog] = useState<string[]>([""]);
+	const [started, setStarted] = useState<boolean>(false);
+
+	useEffect(() => {
+		let sendInterval: any;
+
+		if (started) {
+			setLog(log => {
+				return [...log, `[!] Starting... `];
+			});
+			sendInterval = setInterval(() => {
+				config.channels.forEach(channel => {
+					props.data.forEach(token => {
+						sendMessager(channel, messageParser(props.sendMessage), token.token)
+							.then(() => {
+								setLog(log => {
+									if (log.length > 100) {
+										return [...log.slice(2), `[+] Sent to ${channel}`];
+									}
+									return [...log, `[+] Sent to ${channel}`];
+								});
+							})
+							.catch(() => {
+								setLog(log => {
+									if (log.length > 100) {
+										return [...log.slice(2), `[-] Sent error to ${channel}`];
+									}
+									return [...log, `[-] Sent error to ${channel}`];
+								});
+							});
+					});
+				});
+			}, config.interval);
+		}
+
+		return () => {
+			setLog(log => {
+				return [...log, `[!] Stopping... `];
+			});
+			clearInterval(sendInterval);
+		};
+	}, [started]);
 
 	return (
 		<div className="flex flex-col justify-center items-center space-y-2">
 			<Label className="my-3">Interval</Label>
-			<Input
-				type="number"
-				value={config.interval}
-				onChange={e => {
-					setConfig({
-						...config,
-						interval: parseInt(e.target.value)
-					});
-				}}
-			/>
+			<div className="flex w-full">
+				<Input
+					type="number"
+					value={config.interval}
+					onChange={e => {
+						setConfig({
+							...config,
+							interval: parseInt(e.target.value)
+						});
+					}}
+					className="w-5/6 h-full"
+				/>
+				<Label className="w-1/6 flex justify-center items-center">ms</Label>
+			</div>
 			<Label className="my-3">Channels</Label>
 			<Textarea
 				value={config.channels.join("\n")}
-				onChange={(e) => {
+				onChange={e => {
 					setConfig({
 						...config,
-						channels: e.target.value.split("\n")
+						channels: removeReturn(e.target.value).split("\n")
 					});
 				}}
+				placeholder={"channelId\nchannelId\n..."}
 			/>
+			<div className="flex w-full justify-around">
+				<Button
+					className="w-1/3"
+					disabled={started}
+					onClick={() => {
+						setStarted(true);
+					}}>
+					Start
+				</Button>
+				<Button
+					className="w-1/3"
+					disabled={!started}
+					onClick={() => {
+						setStarted(false);
+					}}>
+					Stop
+				</Button>
+			</div>
+			<Label className="my-3">Log</Label>
+			<Textarea value={log.join("\n")} readOnly></Textarea>
 		</div>
 	);
 }

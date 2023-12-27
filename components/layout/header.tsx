@@ -8,7 +8,7 @@ export function Header() {
 		<header className="w-full flex items-center justify-between p-4">
 			<Label className="text-2xl font-bold inline-flex items-center">
 				<Image src="/icon.gif" alt="Logo" width={35} height={35} className="rounded-full mr-3" />
-				Discord Nuker
+				Discord Nuker α版
 			</Label>
 			<ThemeSwitch />
 		</header>

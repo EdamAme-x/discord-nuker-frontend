@@ -31,12 +31,11 @@ const presets: string[] = [
 	`
 荒らし共栄圏万歳！
 {{link2}}
-{{link}}
-{{random}}
+{{random_mention}}
+{{random2}}
 `,
 	`
 荒らし共栄圏最強！
-{{link2}}
 {{link}}
 {{random}} 
 {{date}}は荒らし共栄圏の勝利記念日だ！
@@ -102,6 +101,7 @@ function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void; 
 	const [config, setConfig] = useState<Config>(initConfig);
 	const [log, setLog] = useState<string[]>([""]);
 	const [started, setStarted] = useState<boolean>(false);
+	const [guildId, setGuildId] = useState<string>("");
 
 	useEffect(() => {
 		let sendInterval: any;
@@ -110,6 +110,8 @@ function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void; 
 			setLog(log => {
 				return [...log, `[!] Starting... `];
 			});
+
+
 			sendInterval = setInterval(() => {
 				config.channels.forEach(channel => {
 					props.data.forEach(token => {

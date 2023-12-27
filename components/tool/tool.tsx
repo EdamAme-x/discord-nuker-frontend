@@ -7,6 +7,7 @@ import { LS } from "@/lib/ls";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../ui/error";
 import { Label } from "../ui/label";
+import { Reaction } from "./reaction";
 import { Sender } from "./sender";
 import { TokenPanel } from "./tokenPanel";
 
@@ -35,6 +36,7 @@ export function Tool() {
 			{data.length > 0 && (
 				<>
 					<Sender data={data} setData={setData} />
+					<Reaction data={data} setData={setData} />
 				</>
 			)}
 		</div>

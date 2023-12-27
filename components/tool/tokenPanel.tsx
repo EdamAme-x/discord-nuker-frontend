@@ -54,10 +54,12 @@ export function TokenPanel(props: { data: Tokens; setData: (data: Tokens) => voi
 		}
 
 		if (props.data.length > 24) {
-			const confirmAnswer = confirm("これ以上の追加はAutoModに検知される可能性が高い為、推奨しません。よろしいですか?");
-		
+			const confirmAnswer = confirm(
+				"これ以上の追加はAutoModに検知される可能性が高い為、推奨しません。よろしいですか?"
+			);
+
 			if (!confirmAnswer) {
-				toast.error("キャンセルしました。")
+				toast.error("キャンセルしました。");
 				return;
 			}
 		}

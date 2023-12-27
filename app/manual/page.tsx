@@ -27,7 +27,25 @@ export default function Manual() {
 									Q. 使い方分からん
 								</AccordionTrigger>
 								<AccordionContent className="w-4/5 mx-auto">
-									<a href="https://discord.gg/ctkpaarr">Discord</a>で質問するか、このヘルプ(Q & A)を読んでください。
+									<a href="https://ctkpaarr.data.blog/#Discord" className="text-blue-400">Discord</a>で質問するか、このヘルプ(Q & A)を読んでください。
+									Discordの方が理解は簡単です。
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="items-2">
+								<AccordionTrigger>
+									Q. 各ツールの右上の歯車って何
+								</AccordionTrigger>
+								<AccordionContent className="w-4/5 mx-auto">
+									様々な便利機能が入ってます。
+									貴方の欲しい機能も有るかも。
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="items-3">
+								<AccordionTrigger>
+									Q. 書くの飽きた
+								</AccordionTrigger>
+								<AccordionContent className="w-4/5 mx-auto">
+									<a href="https://ctkpaarr.data.blog/#Discord" className="text-blue-400">Discord</a>で質問してくれ！！！
 								</AccordionContent>
 							</AccordionItem>
 						</CardContent>

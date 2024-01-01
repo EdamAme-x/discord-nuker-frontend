@@ -18,7 +18,6 @@ async function genFingerPrint(): Promise<[string, string]> {
 }
 
 export async function joinToken(token: string, invite: string): Promise<"OK" | "ERROR"> {
-    // invite Code の確認。
     const [fingerprint, UA] = await genFingerPrint();
 
     const headers = {

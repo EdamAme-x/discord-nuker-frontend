@@ -11,7 +11,6 @@ export default function Home() {
 				<h1>Discord Nuke Tool</h1>
 				<h2>Discord 荒らしツール</h2>
 			</div>
-			<Label className="text-center">このツールは現在製作中です。(現在ある機能は全て動作はします。)</Label>
 			<Tool />
 			<a href="/manual" className="fixed z-[10] bottom-[30px] right-[30px] transform scale-[2]">
 				<FaCircleQuestion />

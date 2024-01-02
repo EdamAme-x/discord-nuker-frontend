@@ -1,3 +1,11 @@
+function genSessionID(): string {
+    return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    })
+}
+
 async function genFingerPrint(): Promise<[string, string]> {
     const UA = 'Mozilla/5.0 (Linux; Android 6.0; Nexus '+Math.floor(Math.random() * 10) / 10+' Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36 Edg/114.0.182' + Math.floor(Math.random() * 100) / 100;
 
@@ -37,7 +45,9 @@ export async function joinToken(token: string, invite: string): Promise<"OK" | "
     const response = await fetch(`https://discord.com/api/v9/invites/${invite}`, {
         method: "POST",
         headers: headers,
-        body: null
+        body: JSON.stringify({
+            "session_id": genSessionID()
+        })
     })
 
     if (!response.ok) {

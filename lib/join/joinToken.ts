@@ -6,7 +6,7 @@ function genSessionID(): string {
     })
 }
 
-async function genFingerPrint(): Promise<[string, string]> {
+async function genFingerPrint(): Promise<string> {
     const UA = 'Mozilla/5.0 (Linux; Android 6.0; Nexus '+Math.floor(Math.random() * 10) / 10+' Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36 Edg/114.0.182' + Math.floor(Math.random() * 100) / 100;
 
     const headers_finger = {
@@ -22,11 +22,11 @@ async function genFingerPrint(): Promise<[string, string]> {
         'X-Track': btoa('{"os":"' + (Math.random() > 0.5 ? "IOS" : "WINDOWS" ) + '","browser":"Safe","system_locale":"en-GB","browser_user_agent":"'+UA+'","browser_version":"15.0","os_v":"","referrer":"","referring_domain":"","referrer_domain_cookie":"stable","client_build_number":9999,"client_event_source":"stable","client_event_source":"stable"}'),
     }
 
-    return [((await (await fetch("https://discord.com/api/v9/experiments", {headers: headers_finger})).json()).fingerprint ?? "1191414115344855082._nokxHUJzvNiBOhCRr1h1UAa8Ho"), UA];
+    return (await (await fetch("https://discord.com/api/v9/experiments", {headers: headers_finger})).json()).fingerprint ?? "1191414115344855082._nokxHUJzvNiBOhCRr1h1UAa8Ho";
 }
 
 export async function joinToken(token: string, invite: string): Promise<"OK" | "ERROR"> {
-    const [fingerprint, UA] = await genFingerPrint();
+    const fingerprint = await genFingerPrint();
 
     const headers = {
         "authorization": token,

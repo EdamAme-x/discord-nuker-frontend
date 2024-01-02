@@ -45,13 +45,18 @@ export function Reaction(props: { data: Tokens; setData: (data: Tokens) => void 
 					React
 				</Button>
 			</div>
-			<Textarea value={log.map(x => {
-                if (x.r) {
-                    return `(+) ${x.i}: Success`
-                }else {
-                    return `(-) ${x.i}: Failed`
-                }
-            }).join("\n")} readOnly />
+			<Textarea
+				value={log
+					.map(x => {
+						if (x.r) {
+							return `(+) ${x.i}: Success`;
+						} else {
+							return `(-) ${x.i}: Failed`;
+						}
+					})
+					.join("\n")}
+				readOnly
+			/>
 		</div>
 	);
 }

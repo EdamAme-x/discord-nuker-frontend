@@ -111,7 +111,6 @@ function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void; 
 				return [...log, `[!] Starting... `];
 			});
 
-
 			sendInterval = setInterval(() => {
 				config.channels.forEach(channel => {
 					props.data.forEach(token => {

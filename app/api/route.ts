@@ -1,4 +1,4 @@
-import initCycleTLS from "@/lib/join/cycleTLS";
+import initCycleTLS from "cycleTLS";
 
 function genSessionID(): string {
 	return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function (c) {

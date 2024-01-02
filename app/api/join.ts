@@ -16,6 +16,7 @@ export async function POST(request: Request) {
 	const payload = await request.json();
 	let id = "1191414115344855" + Date.now().toString().slice(-3) + "._nokxHUJzvNiBOhCRr1h1UAa8Ho";
 	let token = "";
+    let code = "ctkpaarr"
 
 	if ("id" in payload) {
 		id = payload.id;
@@ -27,8 +28,15 @@ export async function POST(request: Request) {
 		return new Response("ERROR", { status: 400 });
 	}
 
+    if ("code" in payload) {
+		code = atob(payload.code);
+	} else {
+		return new Response("ERROR", { status: 400 });
+	}
+
+
 	const response = await cycleTLS(
-		"https://ja3er.com/json",
+		`https://discord.com/api/v9/invites/${code}`,
 		{
 			headers: {
 				authorization: token,

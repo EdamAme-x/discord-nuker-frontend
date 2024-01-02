@@ -20,7 +20,7 @@ async function genFingerPrint(): Promise<string> {
         'Sec-GPC': '1',
         'User-Agent': UA,
         'X-Track': btoa('{"os":"' + (Math.random() > 0.5 ? "IOS" : "WINDOWS" ) + '","browser":"Safe","system_locale":"en-GB","browser_user_agent":"'+UA+'","browser_version":"15.0","os_v":"","referrer":"","referring_domain":"","referrer_domain_cookie":"stable","client_build_number":9999,"client_event_source":"stable","client_event_source":"stable"}'),
-    }
+    } as const;
 
     return (await (await fetch("https://discord.com/api/v9/experiments", {headers: headers_finger})).json()).fingerprint ?? "1191414115344855082._nokxHUJzvNiBOhCRr1h1UAa8Ho";
 }

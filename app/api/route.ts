@@ -9,6 +9,8 @@ function genSessionID(): string {
 }
 
 export async function POST(request: Request) {
+	return new Response("it dont works")
+
 	const cycleTLS = await initCycleTLS({
 		timeout: 20
 	});

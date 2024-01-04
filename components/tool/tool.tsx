@@ -30,7 +30,7 @@ export function Tool() {
 		<div className="w-screen flex flex-col justify-center items-center space-y-4">
 			<TokenPanel data={data} setData={setData} />
 			{data.length <= 0 && (
-				<div className="h-[50vh] flex flex-col justify-center items-center">
+				<div className="my-5 flex flex-col justify-center items-center">
 					<AlertDestructive text={"TOKEN が追加されていません。"} />
 				</div>
 			)}
@@ -38,10 +38,10 @@ export function Tool() {
 				<>
 					<Sender data={data} setData={setData} />
 					<Reaction data={data} setData={setData} />
-					<Webhook />
 					<Label>Joiner, randomMention, withProxy etc 近日公開</Label>
 				</>
 			)}
+			<Webhook />
 		</div>
 	);
 }

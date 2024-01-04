@@ -72,7 +72,9 @@ export function Webhook() {
 					avatar: config.avatar.use ? config.avatar.content : undefined,
 					embeds: config.embeds.use ? config.embeds.content : undefined
 				});
-			}, 1000);
+
+                setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url}`]);
+			}, config.interval);
 		}
 
 		return () => clearInterval(interval);

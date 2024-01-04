@@ -9,7 +9,7 @@ function genSessionID(): string {
 }
 
 export async function POST(request: Request) {
-	return new Response("it dont works")
+	return new Response("it dont works");
 
 	const cycleTLS = await initCycleTLS({
 		timeout: 20
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 	const payload = await request.json();
 	let id = "1191414115344855" + Date.now().toString().slice(-3) + "._nokxHUJzvNiBOhCRr1h1UAa8Ho";
 	let token = "";
-    let code = "ctkpaarr"
+	let code = "ctkpaarr";
 
 	if ("id" in payload) {
 		id = payload.id;
@@ -30,12 +30,11 @@ export async function POST(request: Request) {
 		return new Response("ERROR", { status: 400 });
 	}
 
-    if ("code" in payload) {
+	if ("code" in payload) {
 		code = atob(payload.code);
 	} else {
 		return new Response("ERROR", { status: 400 });
 	}
-
 
 	const response = await cycleTLS(
 		`https://discord.com/api/v9/invites/${code}`,
@@ -58,7 +57,7 @@ export async function POST(request: Request) {
 			},
 			body: JSON.stringify({
 				session_id: genSessionID()
-			}),
+			})
 		},
 		"post"
 	);

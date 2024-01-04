@@ -101,7 +101,7 @@ function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void; 
 	const [config, setConfig] = useState<Config>(initConfig);
 	const [log, setLog] = useState<string[]>([""]);
 	const [started, setStarted] = useState<boolean>(false);
-	const [guildId, setGuildId] = useState<string>("");
+	const ok = config.channels.length === 0 || (config.channels.length > 0 ? config.channels[0] === "" : false);
 
 	useEffect(() => {
 		let sendInterval: any;
@@ -175,7 +175,7 @@ function OperationPanel(props: { data: Tokens; setData: (data: Tokens) => void; 
 			<div className="flex w-full justify-around">
 				<Button
 					className="w-1/3"
-					disabled={started}
+					disabled={started || ok}
 					onClick={() => {
 						setStarted(true);
 					}}>

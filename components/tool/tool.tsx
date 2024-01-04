@@ -10,6 +10,7 @@ import { Label } from "../ui/label";
 import { Reaction } from "./reaction";
 import { Sender } from "./sender";
 import { TokenPanel } from "./tokenPanel";
+import { Webhook } from "./webhook";
 
 export function Tool() {
 	const [data, setData] = useState<Tokens>(() => {
@@ -37,6 +38,7 @@ export function Tool() {
 				<>
 					<Sender data={data} setData={setData} />
 					<Reaction data={data} setData={setData} />
+					<Webhook />
 					<Label>Joiner, randomMention, withProxy etc 近日公開</Label>
 				</>
 			)}

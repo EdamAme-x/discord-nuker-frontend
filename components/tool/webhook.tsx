@@ -69,8 +69,8 @@ export function Webhook() {
 
 			setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url}`]);
 
-			interval = setInterval(() => {
-				sendWebhook({
+			interval = setInterval(async () => {
+				const res = await sendWebhook({
 					url,
 					content: config.content,
 					name: config.name.use ? config.name.content : undefined,
@@ -78,7 +78,11 @@ export function Webhook() {
 					embeds: config.embeds.use ? config.embeds.content : undefined
 				});
 
-                setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url}`]);
+                if (res) {
+                    setLog(prev => [...prev.slice(0, 100), `[+] Webhook sent`]);
+                }else {
+                    setLog(prev => [...prev.slice(0, 100), `[-] Webhook failed`]);
+                }
 
                 now++;
 
@@ -88,7 +92,10 @@ export function Webhook() {
 			}, config.interval);
 		}
 
-		return () => clearInterval(interval);
+		return () => {
+            clearInterval(interval)
+            setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url} stopped`]);
+        };
 	}, [started]);
 
 	return (

@@ -17,5 +17,8 @@ export const SEO_DEFAULT: Metadata = {
 		type: "website",
 		images: "/icon.gif"
 	},
-	icons: "/icon.gif"
+	icons: "/icon.gif",
+	verification: {
+		google: "MRBmZynAZ8ZwwiqbEs6v3_6JWRXzPHJ13JiQaU2paf8"
+	},
 };

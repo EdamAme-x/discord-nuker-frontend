@@ -4,6 +4,17 @@ export const CONST = {
 	SPONSER_LINK: "https://ctkpaarr.data.blog",
 	UPDATES: [
 		{
+			title: "Webhook 荒らし公開",
+			content: (
+				<>
+					<p>Webhook荒らしツールを公開しました。</p>
+					<p>使い方は雰囲気で分かると思いますが、</p>
+					<p>分からない場合は右下のヘルプを押してね</p>
+				</>
+			),
+			date: "2024/1/5"
+		},
+		{
 			title: "ツールα版公開",
 			content: (
 				<>
@@ -16,7 +27,7 @@ export const CONST = {
 					<p>URLが変更される可能性が有る為、必ず参加のほどお願いします。</p>
 				</>
 			),
-			date: "2023/12/27"
+			date: "2024/1/4"
 		},
 		{
 			title: "利用規約",
@@ -27,7 +38,7 @@ export const CONST = {
 					<p>配布は可能です。是非宣伝して下さい！宣伝してくれた人にはβ版の使用を許可します。</p>
 				</>
 			),
-			date: "2023/12/27"
+			date: "2024/1/3"
 		}
 	]
 } as const;

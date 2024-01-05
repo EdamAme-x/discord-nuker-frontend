@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://nuke.ctkpaarr.org
+
+# Sitemaps
+Sitemap: https://nuke.ctkpaarr.org/sitemap.xml

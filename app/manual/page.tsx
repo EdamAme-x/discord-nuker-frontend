@@ -13,7 +13,7 @@ export default function Manual() {
 				footer: false
 			}}>
 			<div className="hidden">
-				<h1>Discord Nuke Tool</h1>
+				<h1>Discord Nuker Tool</h1>
 				<h2>Discord 荒らしツール</h2>
 			</div>
 			<a href="/" className="fixed z-[10] bottom-[30px] right-[30px] transform scale-[2]">

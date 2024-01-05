@@ -54,8 +54,8 @@ export function Webhook() {
 	const [openAvatarConfig, setOpenAvatarConfig] = useState<boolean>(false);
 	const [openEmbedsConfig, setOpenEmbedsConfig] = useState<boolean>(false);
 
-    const [openMax, setOpenMax] = useState<boolean>(false);
-    const [max, setMax] = useState<number>(100);
+	const [openMax, setOpenMax] = useState<boolean>(false);
+	const [max, setMax] = useState<number>(100);
 
 	useEffect(() => {
 		let interval: any;
@@ -64,8 +64,8 @@ export function Webhook() {
 			if (!isWebhookURL) {
 				setStarted(false);
 			}
-            
-            let now = 0;
+
+			let now = 0;
 
 			setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url}`]);
 
@@ -78,24 +78,24 @@ export function Webhook() {
 					embeds: config.embeds.use ? config.embeds.content : undefined
 				});
 
-                if (res) {
-                    setLog(prev => [...prev.slice(0, 100), `[+] Webhook sent`]);
-                }else {
-                    setLog(prev => [...prev.slice(0, 100), `[-] Webhook failed`]);
-                }
+				if (res) {
+					setLog(prev => [...prev.slice(0, 100), `[+] Webhook sent`]);
+				} else {
+					setLog(prev => [...prev.slice(0, 100), `[-] Webhook failed`]);
+				}
 
-                now++;
+				now++;
 
-                if (now >= max && openMax) {
-                    setStarted(false);
-                }
+				if (now >= max && openMax) {
+					setStarted(false);
+				}
 			}, config.interval);
 		}
 
 		return () => {
-            clearInterval(interval)
-            setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url} stopped`]);
-        };
+			clearInterval(interval);
+			setLog(prev => [...prev.slice(0, 100), `[@] Webhook: ${url} stopped`]);
+		};
 	}, [started]);
 
 	return (
@@ -209,20 +209,20 @@ export function Webhook() {
 						embeds
 					</label>
 				</div>
-                <div className="flex space-x-2">
-                    <Checkbox
-                        id="max"
-                        checked={openMax}
-                        onClick={(e: any) => {
-                            setOpenMax(!openMax);
-                        }}
-                    />
-                    <label
-                        htmlFor="max"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        Max
-                    </label>
-                </div>
+				<div className="flex space-x-2">
+					<Checkbox
+						id="max"
+						checked={openMax}
+						onClick={(e: any) => {
+							setOpenMax(!openMax);
+						}}
+					/>
+					<label
+						htmlFor="max"
+						className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+						Max
+					</label>
+				</div>
 			</div>
 			<div className="w-[95%]">
 				{openNameConfig && (
@@ -301,21 +301,21 @@ export function Webhook() {
 						/>
 					</div>
 				)}
-                {openMax && (
-                    <div className="flex flex-col w-full justify-center items-center space-x-4 my-3">
-                        <Label className="text-sm font-bold w-full px-[5px] inline-flex justify-left ml-10 items-center my-3">
-                            Max
-                        </Label>
-                        <Input
-                            value={max}
-                            onChange={e => {
-                                setMax(parseInt(e.target.value));
-                            }}
-                            className="w-[90%]"
-                            placeholder="max"
-                        />
-                    </div>
-                )}
+				{openMax && (
+					<div className="flex flex-col w-full justify-center items-center space-x-4 my-3">
+						<Label className="text-sm font-bold w-full px-[5px] inline-flex justify-left ml-10 items-center my-3">
+							Max
+						</Label>
+						<Input
+							value={max}
+							onChange={e => {
+								setMax(parseInt(e.target.value));
+							}}
+							className="w-[90%]"
+							placeholder="max"
+						/>
+					</div>
+				)}
 			</div>
 			<div className="flex w-full justify-around items-center space-x-2 my-3">
 				<Button onClick={() => setStarted(true)} className="w-2/5" disabled={started || !isWebhookURL}>

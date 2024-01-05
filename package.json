@@ -11,7 +11,8 @@
     "push": "pnpm format & add * && git commit -m 'add' && git push -u origin main",
     "add-ui": "pnpx shadcn-ui add ",
     "clear": "rm ./.next/cache/*",
-    "xlint": "pnpm oxlint"
+    "xlint": "pnpm oxlint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",

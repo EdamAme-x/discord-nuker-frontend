@@ -1,5 +1,6 @@
 # discord-nuker-frontend
-Discord荒らしツールのフロントエンドです。 Sponsor: 荒らし共栄圏
+Discord荒らしツールのフロントエンドです。 Sponsor: 荒らし共栄圏  
+
 [Discord 荒らしツール](https://nuke.ctkpaarr.org)
 
 ### Rules
